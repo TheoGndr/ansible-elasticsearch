@@ -1,0 +1,23 @@
+- name: Install and configure ElasticSearch
+  hosts: all
+  remote_user: root
+  tasks:
+
+  - name: Install OpenJdk packet
+    package:
+      name: java-1.8.0-openjdk
+      state: present
+
+  - name: Install ElasticSearch packet
+    package:
+      name: elasticsearch
+      state: present
+  
+  - name: Backup configuration file
+    command: cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.backup
+
+  - name: Import the new configuration file
+    copy:
+      src: /root/ansible/elasticsearch.yml
+      dest: /etc/elasticsearch/elasticsearch.yml
+
